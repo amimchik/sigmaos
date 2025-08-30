@@ -3,5 +3,5 @@
 void kernel_main(void) {
 	vga_init();
 	vga_clear();
-	vga_print("Hello, World!\nanother line");
+	vga_print((vga_c_t *)"Hello, World!\nanother line");
 }

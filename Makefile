@@ -24,7 +24,7 @@ ISO = $(BUILD_DIR)/sigmaos.iso
 
 all: iso
 
-$(ISO): kernel
+$(ISO): $(KERNEL_ELF)
 	rm -rf $(ISO_DIR) && mkdir -p $(ISO_DIR)
 	mkdir -p $(ISO_DIR)/boot/grub
 	cp grub.cfg $(ISO_DIR)/boot/grub

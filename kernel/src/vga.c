@@ -1,13 +1,14 @@
 #include <sigmaos/vga.h>
 
 static struct vga_cursor_pos cursor_pos;
-static vga_c_t *video = (char *)0xb8000;
+static vga_c_t *video = (vga_c_t *)0xb8000;
 static vga_attr_t current_attr;
 
 int vga_init()
 {
 	cursor_pos.x = 0;
 	cursor_pos.y = 0;
+	return 0;
 }
 
 /*
@@ -31,7 +32,7 @@ static int scroll_back(int times)
 		video[i] = ' ';
 		video[i + 1] = 0x07;
 	}
-	return times;
+	return 0;
 }
 
 static int vga_setc(vga_c_t c, vga_attr_t attr)
@@ -39,6 +40,7 @@ static int vga_setc(vga_c_t c, vga_attr_t attr)
 	int pos = cursor_pos.y * VGA_SCREEN_WIDTH + cursor_pos.x;
 	video[pos * 2] = c;
 	video[pos * 2 + 1] = attr;
+	return 0;
 }
 
 int vga_putc(vga_c_t c)
@@ -67,6 +69,7 @@ int vga_putc(vga_c_t c)
 	struct vga_cursor_pos pos = vga_get_cursor_pos();
 	pos.x++;
 	vga_set_cursor_pos(pos);
+	return 0;
 }
 
 int vga_clear()
@@ -85,6 +88,7 @@ int vga_clear()
 	pos.x = 0;
 	pos.y = 0;
 	vga_set_cursor_pos(pos);
+	return 0;
 }
 
 int vga_print(vga_c_t *s)
@@ -93,6 +97,7 @@ int vga_print(vga_c_t *s)
 		vga_putc(*s);
 		s++;
 	}
+	return 0;
 }
 
 
@@ -112,4 +117,5 @@ int vga_set_cursor_pos(struct vga_cursor_pos cursor)
 	outb(0x3D5, (uint8_t)(pos & 0xFF));
 	outb(0x3D4, 0x0E);
 	outb(0x3D5, (uint8_t)((pos >> 8) & 0xFF));
+	return 0;
 }
